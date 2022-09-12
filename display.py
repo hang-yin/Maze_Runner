@@ -23,10 +23,16 @@ m = len(grid[0])
 
 # get user input on start and goal position
 display_maze(maze)
+#t = threading.Thread(target=target_function)
 start_row, start_col = get_start_position(maze, n, m)
 goal_row, goal_col = get_goal_position(maze, n, m)
+maze[start_row][start_col] = 2
+maze[goal_row][goal_col] = 3
 robot_pos = (start_row,start_col)
 
+# run maze solver HERE
+
+first = False
 # robot_pos = (3,4)
 
 # initialize pygame
@@ -46,6 +52,8 @@ path = set()
 
 done = False
 clock = pygame.time.Clock()
+grid = maze
+
  
 # main pygame loop
 while not done:
@@ -94,11 +102,12 @@ while not done:
                               (MARGIN + HEIGHT) * row + MARGIN + edge/2,
                               WIDTH,
                               HEIGHT])
- 
+    
     # Limit to 60 frames per second
     clock.tick(60)
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
+        
  
 # Be IDLE friendly. If you forget this line, the program will 'hang'
 # on exit.
