@@ -23,14 +23,14 @@ def get_start_position(maze, n, m):
 
 def get_goal_position(maze, n, m):
 
-    x1 = int(input("Which row should our robot get to?"))
+    x1 = int(input("Which row should our robot get to?\n"))
     if x1 < 0 or x1 >= n:
-        print("Invalid row number: should be between 0 and n")
+        print("Invalid row number: should be between 0 and n\n")
         get_goal_position(maze, n, m)
         return
-    y1 = int(input("which column should our robot get to?"))
-    if y0 < 0 or y0 >= m:
-        print("Invalid column number: should be between 0 and m")
+    y1 = int(input("which column should our robot get to?\n"))
+    if y1 < 0 or y1 >= m:
+        print("Invalid column number: should be between 0 and m\n")
         get_goal_position(maze, n, m)
         return
     

@@ -1,6 +1,6 @@
 from custom_maze import maze
 from state import find_neighbors
-
+'''
 #import maze array
 init_maze=maze
 nbors=find_neighbors(init_maze,robo_start)
@@ -31,6 +31,7 @@ def path_finder(init_maze):
                     init_maze[x][y]=1
                 elif init_maze[x][y] != init_maze[i][j]+1:
                     init_maze[x][y]=init_maze[i][j]+1
+'''
 
 
 

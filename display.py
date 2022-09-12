@@ -3,7 +3,8 @@ from pygame.locals import *
 from custom_maze import maze
 from state import find_neighbors
 from user_input import get_start_position, get_goal_position
-from maze_solver import path_solver
+#from maze_solver import path_finder
+from prim_maze_gen import generate_maze, display_maze
 
 # define colors
 BLACK = (0, 0, 0)
@@ -15,17 +16,18 @@ BLUE = (0, 0, 255)
 YELLOW = (255,255,0)
 
 # generate maze
+maze = generate_maze()
 grid = maze
 n = len(grid)
 m = len(grid[0])
 
 # get user input on start and goal position
-'''
+display_maze(maze)
 start_row, start_col = get_start_position(maze, n, m)
 goal_row, goal_col = get_goal_position(maze, n, m)
 robot_pos = (start_row,start_col)
-'''
-robot_pos = (3,4)
+
+# robot_pos = (3,4)
 
 # initialize pygame
 pygame.init()
@@ -38,8 +40,9 @@ MARGIN = edge/max(num_of_cols,num_of_rows)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 
 # solve the maze here
-path = path_solver(maze)
-path = set(path)
+# path = path_solver(maze)
+# path = set(path)
+path = set()
 
 done = False
 clock = pygame.time.Clock()
