@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from state import find_all_neighbors, find_wall_neighbors
+from state import find_all_neighbors, find_wall_neighbors, find_neighbors
 
 n = random.randint(4, 10)   # rows
 m = random.randint(4, 10)   # cols
@@ -26,7 +26,7 @@ display_maze()
 x = random.randint(0, n-1)
 y = random.randint(0, m-1)
 cell_A = (x, y)
-# maze[x][y] = 0
+maze[x][y] = 0
 walls = []
 
 
@@ -38,12 +38,19 @@ for nbr in neighbors:
 
 while len(walls) != 0:
     cell_C = walls[random.randint(0, len(walls)-1)]   # C is a wall
-    maze[cell_A[0]][cell_A[1]] = 0
 
     # check if C is an edge cell
     if cell_C[0] == 0 or cell_C[0] == n-1 or cell_C[1] == 0 or cell_C[1] == m-1:
+        walls.remove(cell_C)
         continue
-    
+
+    c_neighbors = find_neighbors(maze, cell_C)
+    if len(c_neighbors)>=2:
+        walls.remove(cell_C)
+        continue
+    else:
+        cell_A = c_neighbors[0]
+
     # A and C are in the same row
     if cell_A[0] == cell_C[0]:
         # C to the right of A
@@ -64,8 +71,6 @@ while len(walls) != 0:
         else:
             cell_B = (cell_C[0]-1, cell_A[1])
 
-    # print(cell_A)
-    # print(cell_B)
     if maze[cell_A[0]][cell_A[1]] == 1 or maze[cell_B[0]][cell_B[1]] == 1:
         if maze[cell_A[0]][cell_A[1]] == 1:
             cell_D = cell_A
