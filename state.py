@@ -6,6 +6,6 @@ def find_neighbors(maze, position):
     x0,y0 = position
     neighbors = []
     for x1,y1 in [(x0-1,y0),(x0+1,y0),(x0,y0-1),(x0,y0+1)]:
-        if x1>=0 and x1<n and y1>=0 and y1<m:
+        if x1>=0 and x1<n and y1>=0 and y1<m and maze[x1][y1]==0:
             neighbors.append((x1,y1))
     return neighbors
