@@ -1,71 +1,54 @@
-#import custom_maze
-
 import pygame
 from pygame.locals import *
 from custom_maze import maze
+from state import find_neighbors
+from user_input import get_start_position, get_goal_position
+from maze_solver import path_solver
 
+# define colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 PURPLE = (138, 43, 226)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+YELLOW = (255,255,0)
 
-WIDTH = 40
-HEIGHT = 40
-
-MARGIN = 5
-'''
-grid = []
-# Loop for each row
-for row in range(4):
-    # For each row, create a list that will
-    # represent an entire row
-    grid.append([])
-    # Loop for each column
-    for column in range(5):
-        # Add a the number zero to the current row
-        grid[row].append(0)
-
-grid[0][1] = 1
-grid[1][1] = 1
-grid[0][3] = 1
-grid[1][3] = 1
-grid[2][2] = 1
-grid[2][3] = 1
-grid[3][0] = 1
-grid[3][4] = 2
-grid[0][0] = 3
-'''
+# generate maze
 grid = maze
 n = len(grid)
 m = len(grid[0])
+
+# get user input on start and goal position
+'''
+start_row, start_col = get_start_position(maze, n, m)
+goal_row, goal_col = get_goal_position(maze, n, m)
+robot_pos = (start_row,start_col)
+'''
 robot_pos = (3,4)
 
-
+# initialize pygame
 pygame.init()
-
-WINDOW_SIZE = [300, 300]
+WINDOW_SIZE = [800, 800]
+num_of_rows = n+1
+num_of_cols = m+1
+edge = min(WINDOW_SIZE[0]/(num_of_cols+1), WINDOW_SIZE[1]/(num_of_rows+1))
+WIDTH = HEIGHT = edge
+MARGIN = edge/max(num_of_cols,num_of_rows)
 screen = pygame.display.set_mode(WINDOW_SIZE)
- 
-done = False
 
+# solve the maze here
+path = path_solver(maze)
+path = set(path)
+
+done = False
 clock = pygame.time.Clock()
  
-# -------- Main Program Loop -----------
+# main pygame loop
 while not done:
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             done = True  # Flag that we are done so we exit this loop
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            # User clicks the mouse. Get the position
-            pos = pygame.mouse.get_pos()
-            # Change the x/y screen coordinates to grid coordinates
-            column = pos[0] // (WIDTH + MARGIN)
-            row = pos[1] // (HEIGHT + MARGIN)
-            # Set that location to one
-            grid[row][column] = 1
-            print("Click ", pos, "Grid coordinates: ", row, column)
         elif event.type == pygame.KEYDOWN:
             if event.key == K_DOWN:
                 if robot_pos[0]+1 < n and maze[robot_pos[0]+1][robot_pos[1]]!=1:
@@ -97,19 +80,20 @@ while not done:
                 color = BLUE
             elif grid[row][column] == 2:
                 color = GREEN
+            elif (row, column) in path:
+                color = YELLOW
             elif grid[row][column] == 3:
                 color = RED
             
             pygame.draw.rect(screen,
                              color,
-                             [(MARGIN + WIDTH) * column + MARGIN,
-                              (MARGIN + HEIGHT) * row + MARGIN,
+                             [(MARGIN + WIDTH) * column + MARGIN + edge/2,
+                              (MARGIN + HEIGHT) * row + MARGIN + edge/2,
                               WIDTH,
                               HEIGHT])
  
     # Limit to 60 frames per second
     clock.tick(60)
- 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
