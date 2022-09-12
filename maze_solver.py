@@ -7,6 +7,8 @@ init_maze=maze
 
 
 
+
+
 def maze_structure(init_maze):
     init_maze=np.reshape(init_maze,(len(init_maze),len(init_maze[0])))
     for i in range(len(init_maze)):
