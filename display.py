@@ -5,6 +5,7 @@ from state import find_neighbors
 from user_input import get_start_position, get_goal_position
 #from maze_solver import path_finder
 from wavefront import wavefront
+from recursive_backtracking import recursive_backtracking
 from prim_maze_gen import generate_maze, display_maze
 
 # define colors
@@ -15,6 +16,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255,255,0)
+ORANGE = (255,165,0)
 
 # generate maze
 maze = generate_maze()
@@ -37,6 +39,8 @@ robot_pos = (start_row,start_col)
 # solve the maze here
 path = wavefront(maze, (start_row,start_col),(goal_row,goal_col))
 path = set(path)
+path_dfs = recursive_backtracking(maze, (start_row,start_col),(goal_row,goal_col))
+path_dfs = set(path_dfs)
 # path = path_solver(maze)
 # path = set(path)
 # path = set()
@@ -94,10 +98,13 @@ while not done:
                 color = BLUE
             elif grid[row][column] == 2:
                 color = GREEN
-            elif (row, column) in path:
-                color = YELLOW
             elif grid[row][column] == 3:
                 color = RED
+            elif (row, column) in path_dfs:
+                color = ORANGE
+            elif (row, column) in path:
+                color = YELLOW
+            
             
             pygame.draw.rect(screen,
                              color,
