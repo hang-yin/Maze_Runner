@@ -4,6 +4,7 @@ from custom_maze import maze
 from state import find_neighbors
 from user_input import get_start_position, get_goal_position
 #from maze_solver import path_finder
+from wavefront import wavefront
 from prim_maze_gen import generate_maze, display_maze
 
 # define colors
@@ -31,9 +32,14 @@ maze[goal_row][goal_col] = 3
 robot_pos = (start_row,start_col)
 
 # run maze solver HERE
-
-first = False
 # robot_pos = (3,4)
+
+# solve the maze here
+path = wavefront(maze, (start_row,start_col),(goal_row,goal_col))
+path = set(path)
+# path = path_solver(maze)
+# path = set(path)
+# path = set()
 
 # initialize pygame
 pygame.init()
@@ -45,10 +51,7 @@ WIDTH = HEIGHT = edge
 MARGIN = edge/max(num_of_cols,num_of_rows)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 
-# solve the maze here
-# path = path_solver(maze)
-# path = set(path)
-path = set()
+
 
 done = False
 clock = pygame.time.Clock()
