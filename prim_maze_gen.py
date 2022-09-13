@@ -8,8 +8,8 @@ def display_maze(maze):
     print('\n')
 
 def generate_maze():
-    n = random.randint(16, 32)   # rows
-    m = random.randint(16, 32)   # cols
+    n = random.randint(8, 10)   # rows
+    m = random.randint(8, 10)   # cols
     print('n: {}, m: {}'.format(n,m))
 
     maze = []
